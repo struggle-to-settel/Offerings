@@ -20,20 +20,12 @@ application {
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
-ktor {
-    fatJar {
-        archiveFileName.set("fat.jar")
-    }
-}
-tasks.shadowJar {
-    version = "1.0.0"
-    manifest {
-        attributes(
-            "Main-Class" to "com.example.ApplicationKt"
-        )
-    }
-}
 
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "com.example.ApplicationKt"
+    }
+}
 
 repositories {
     mavenCentral()
@@ -65,6 +57,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-test-host-jvm:2.3.7")
 
 }
+
 appengine {
     configure<AppEngineAppYamlExtension> {
         stage {
