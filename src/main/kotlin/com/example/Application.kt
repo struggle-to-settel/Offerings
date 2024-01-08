@@ -21,6 +21,7 @@ import org.litote.kmongo.reactivestreams.KMongo
 fun main(args: Array<String>) = EngineMain.main(args)
 
 fun Application.module() {
+    System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2")
     val database =
         KMongo.createClient(ConnectionString(Constants.MONGO_CONNECTION_LINK)).coroutine.getDatabase(Constants.DB_NAME)
     configureSecurity(database)
