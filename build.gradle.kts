@@ -1,3 +1,5 @@
+import com.google.cloud.tools.gradle.appengine.appyaml.AppEngineAppYamlExtension
+
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -7,6 +9,7 @@ plugins {
     id("io.ktor.plugin") version "2.3.7"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.22"
     id("com.github.johnrengelman.shadow") version "7.0.0"
+    id("com.google.cloud.tools.appengine") version "2.4.2"
 }
 
 group = "com.example"
@@ -14,11 +17,10 @@ version = "0.0.1"
 
 application {
     mainClass.set("com.example.ApplicationKt")
-
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
-tasks.shadowJar{
+tasks.shadowJar {
     version = "1.0.0"
     manifest {
         attributes(
@@ -57,4 +59,17 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     testImplementation("io.ktor:ktor-server-test-host-jvm:2.3.7")
 
+}
+appengine {
+    configure<AppEngineAppYamlExtension> {
+        stage {
+            setArtifact("build/libs/${project.name}-all.jar")
+        }
+        deploy {
+            version = "1"
+            projectId = "offerings-410605"
+            stopPreviousVersion = true
+            promote = true
+        }
+    }
 }

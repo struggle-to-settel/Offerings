@@ -12,11 +12,13 @@ import io.ktor.server.plugins.contentnegotiation.*
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 
-fun main() {
+/*fun main() {
     val port = System.getenv("PORT")?.toInt() ?: 8080
     embeddedServer(Netty, port = port, module = Application::module)
         .start(wait = true)
-}
+}*/
+
+fun main(args: Array<String>) = EngineMain.main(args)
 
 fun Application.module() {
     val client =
