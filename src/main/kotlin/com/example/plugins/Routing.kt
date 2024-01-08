@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.Constants
 import com.example.responseModels.User
 import com.example.Res
 import com.example.generateJwtToken
@@ -19,7 +20,7 @@ import org.litote.kmongo.eq
 fun Application.configureRouting(database: CoroutineDatabase) {
     routing {
 
-        val users = database.getCollection<User>("users")
+        val users = database.getCollection<User>(Constants.USERS)
 
         get("/") {
             call.respond(getMap(HttpStatusCode.OK, "Hello There!"))

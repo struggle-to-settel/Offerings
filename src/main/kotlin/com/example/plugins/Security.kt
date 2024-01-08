@@ -8,8 +8,10 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import org.litote.kmongo.coroutine.CoroutineCollection
+import org.litote.kmongo.coroutine.CoroutineDatabase
 
-fun Application.configureSecurity(users: CoroutineCollection<User>) {
+fun Application.configureSecurity(db: CoroutineDatabase) {
+    val users = db.getCollection<User>(Constants.USERS)
     install(Authentication) {
         jwt("accessToken") {
             verifier(

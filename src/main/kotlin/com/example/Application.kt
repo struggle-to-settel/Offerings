@@ -21,10 +21,9 @@ import org.litote.kmongo.reactivestreams.KMongo
 fun main(args: Array<String>) = EngineMain.main(args)
 
 fun Application.module() {
-    val client =
-        KMongo.createClient(ConnectionString("mongodb+srv://admin:admin@cluster0.taw1soo.mongodb.net/")).coroutine
-    val database = client.getDatabase("MyDatabase")
-    configureSecurity(database.getCollection("users"))
+    val database =
+        KMongo.createClient(ConnectionString(Constants.MONGO_CONNECTION_LINK)).coroutine.getDatabase(Constants.DB_NAME)
+    configureSecurity(database)
     configureHTTP()
     configureSerialization()
     configureRouting(database)
